@@ -201,10 +201,8 @@ const getUsers = async (req, res) => {
     // #swagger.tags = ['auth']
 
     // #swagger.ignore = true
-    const users = await User.find({_id: {
-      $ne: req.user._id,
-    } }).select("-password");
-    
+    const users = await User.find({}).select("-password");
+    users = users.filter((user) => user._id != req.user._id);
 
     res.status(200).json({
       users,

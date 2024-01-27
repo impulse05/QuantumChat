@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Query Parameters</title>
+</head>
+<body>
+
+    <h1>URL Query Parameters</h1>
+    <!-- 3 botton for google login , github login , facebook login -->
+
+    <button onclick="window.location.href='/api/auth/google'">Google Login</button>
+    <button onclick="window.location.href='/api/auth/github'">Github Login</button>
+    <button onclick="window.location.href='/api/auth/facebook'">Facebook Login</button>
+
+
+
+    <script>
+        // Function to get URL parameters
+        function getURLParameters() {
+            // Get the current URL
+            var url = new URL(window.location.href);
+
+            // Get the search parameters from the URL
+            var params = new URLSearchParams(url.search);
+
+            // Display each parameter
+            params.forEach(function(value, key) {
+                console.log(key + ' = ' + value);
+                // localstorage me set kardo
+
+                // You can also append the parameters to the HTML
+                var paraElement = document.createElement('p');
+                paraElement.textContent = key + ' = ' + value;
+                document.body.appendChild(paraElement);
+            });
+        }
+
+        // Call the function on page load
+        getURLParameters();
+    </script>
+
+</body>
+</html>

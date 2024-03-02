@@ -12,6 +12,7 @@ import path from "path"
 // server swagger ui
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger-output.json' assert { type: "json" };
+import socketInit from "./socket.js";
 
 dotenv.config();
 
@@ -53,6 +54,9 @@ app.get("/home", (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`The port is ${PORT}`);
 });
+
+
+socketInit(server);

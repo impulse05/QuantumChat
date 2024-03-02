@@ -4,41 +4,63 @@ import Messages from './Messages'
 import Messagebar from './Messagebar'
 import { useLocation, useParams } from 'react-router-dom'
 import { getMessages, sendMessage } from '../../api/GetMessages'
+import {io} from 'socket.io-client'
+import { getCurrentUser } from '../../Auth/auth'
+
+const backend = "http://localhost:8080"
 
 
 function Chatarea({ togglePanel }) {
 
-
-
- 
-
-
-
-
-
-
   const { id } = useParams();
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [socketConnected, setSocketConnected] = useState(false)
+  const [socket, setSocket] = useState(null);
+  const user = getCurrentUser();
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const newSocket = io(backend);
+    newSocket.on('connect', () => {
+      newSocket.emit('setup', user);
+    });
+    newSocket.on('connected', () => {
+      console.log('connected')
+      setSocketConnected(true);
+    });
+    newSocket.emit('join', id);
+    newSocket.on('message received', (newMessage) => {
+      // console.log(newMessage);
+      // console.log(id);
+      if(newMessage.chat!=id) return;
+      // console.log('new message', message);
+      console.log('new message', newMessage);
+      // console.log(messages);
+      setMessages([...messages, newMessage]);
+    });
+
+
+    setSocket(newSocket);
+    
+  }, []);
 
   const fetchMessages = () => {
     getMessages(id).then((res) => {
       setMessages(res);
+      
     });
     
   }
-  const [messages, setMessages] = useState([]);
+
   useEffect(() => {
-
-    const interval = setInterval(() => { fetchMessages(); }, 10 * 1000);
-    fetchMessages();  
-
-    return () => {
-      clearInterval(interval);
-    }
-
-
-
+    fetchMessages();
   }, []);
-  const [message, setMessage] = useState('');
+
+
+  
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // send message to the server
@@ -47,8 +69,10 @@ function Chatarea({ togglePanel }) {
       // attachment: null
 
     }).then((res) => {
-      console.log(res);
-      fetchMessages();  
+      // console.log(res);
+      setMessages([...messages, res.message]);
+      socket.emit('newMessage', res.message);
+
      
     });
 
@@ -61,6 +85,7 @@ function Chatarea({ togglePanel }) {
     name: "John Doe",
     active_time: "active 1h ago"
   }
+
   return (
     <div class=" chat-area flex-1 flex flex-col mt-4 pr-5 border-r-2 border-gray-800">
       <Chatbar data={charbar_data} togglePanel={togglePanel} />

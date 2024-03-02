@@ -7,20 +7,7 @@ import { Routes, Route } from 'react-router-dom';
 
 function Sidebar() {
 
-  const [groupChats, setGroupChats] = useState([]);
-
-  const [personalChats, setPersonalChats] = useState([]);
-
-
-  useEffect(() => {
-    getChats(true).then((data) => {
-      setGroupChats(data);
-    });
-    getChats(false).then((data) => {
-      setPersonalChats(data);
-    });
-
-  }, [])
+ 
 
   return (
     <div class="sidebar hidden lg:flex w-3/12 flex-2 flex-col mr-6 border-r-2 border-gray-800">

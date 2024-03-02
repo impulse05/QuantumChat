@@ -36,6 +36,8 @@ export const createMessage = async (req, res) => {
 
         await message.save();
 
+        await message.populate('sender', "name picture")
+
         const chatToUpdate = await Chat.findByIdAndUpdate(chatId, {
             lastMessage: message._id
         });

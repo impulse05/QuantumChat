@@ -31,7 +31,7 @@ export const sendMessage = async (chat_id, message) => {
                 Authorization: `Bearer ${token}`,
             },
         };
-        return await axios.post(API_URL + "/" + chat_id, message, config)
+        return await axios.post("/api/message/" + chat_id, message, config)
             .then((response) => {
                 return response.data;
             });

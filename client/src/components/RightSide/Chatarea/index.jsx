@@ -53,8 +53,6 @@ function Chatarea({ togglePanel }) {
   }, []);
 
   const fetchMessages = () => {
-    // console.log(*)
-    debugger;
     if(!selectedChat._id) return;
     getMessages(id).then((res) => {
       setMessages(res.messages);

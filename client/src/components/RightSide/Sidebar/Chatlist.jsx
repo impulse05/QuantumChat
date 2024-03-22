@@ -31,9 +31,9 @@ function Chatlist({ chats, groupChat }) {
                 if (groupChat == true) {
                     data.name = chat.chatName;
                     data.profile_pic = chat.chatPicture;
-                    setSelectedChat(data);
+                   
                     return (
-                        <Link to={`/group/${chat._id}`}>
+                        <Link to={`/group/${chat._id}` } onClick={()=>setSelectedChat(data)}>
                             <ChatlistItem data={data} />
                         </Link>
                     )
@@ -41,11 +41,11 @@ function Chatlist({ chats, groupChat }) {
                 else {
 
                     let other_user = chat.users.find((u) => u._id != user._id);
-                    setSelectedChat(data);
+                    
                     data.name = other_user.name;
                     data.profile_pic = other_user.picture;
                     return (
-                        <Link to={`/personal/${chat._id}`}>
+                        <Link to={`/personal/${chat._id}`} onClick={()=>setSelectedChat(data)}>
                             <ChatlistItem data={data} />
                         </Link>
                     )

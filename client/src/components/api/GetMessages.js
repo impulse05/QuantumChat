@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "/api/message";
+const API_URL = "/api/chat";
 
 export const getMessages = async (chat_id) => {
     try
@@ -13,7 +13,7 @@ export const getMessages = async (chat_id) => {
         };
         return await axios.get(API_URL + "/" + chat_id, config)
             .then((response) => {
-                return response.data.messages;
+                return response.data;
             });
     }
     catch (error)

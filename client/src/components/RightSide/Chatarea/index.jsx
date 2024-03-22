@@ -47,17 +47,18 @@ function Chatarea({ togglePanel }) {
       }
      
     });
-    
-
 
     setSocket(newSocket);
     
   }, []);
 
   const fetchMessages = () => {
+    // console.log(*)
+    debugger;
     if(!selectedChat._id) return;
     getMessages(id).then((res) => {
-      setMessages(res);
+      setMessages(res.messages);
+      // setSelectedChat(res.chat);
       
     });
   }

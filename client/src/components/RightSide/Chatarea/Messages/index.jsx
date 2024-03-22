@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Message from './Message'
-import { getMessages } from '../../../api/GetMessages';
 import { useParams } from 'react-router-dom';
 import { getChats } from '../../../api/GetChats';
 import { useChat } from '../../../../Context/chatProvider';

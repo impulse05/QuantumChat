@@ -38,7 +38,7 @@ function Chatarea({ togglePanel }) {
       if(newMessage.chat.toString()!=id.toString()) {
         // refresh the chat list
         console.log("sending to differetn channel")
-        setRefresh(prev => !prev);
+        // setRefresh(prev => !prev);
       }
   
       else{

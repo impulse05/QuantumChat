@@ -19,7 +19,7 @@ function Login(props) {
             const { state } = props;
             const { from } = state || { from: { pathname: "/" } };
             navigate(from);
-            setRefresh(!refresh);
+            setRefresh(prev => !prev);
 
         }).catch((err) => {
             console.log("err: ", err);

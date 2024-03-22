@@ -36,7 +36,7 @@ const ChatProvider = ({ children }) => {
         setPersonalChats(data);
       });
   
-    }, []);
+    }, [refresh]);
 
  
 

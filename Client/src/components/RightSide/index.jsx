@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 
 function RightSide() {
   const [isFriendinfo, setFriendinfo] = useState(false);
+  
 
   const togglePanel = () => {
     setFriendinfo(!isFriendinfo);

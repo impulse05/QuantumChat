@@ -4,7 +4,7 @@ import { getCurrentUser } from './auth'
 function ProtectedRoute({ children }) {
     const currentUser = getCurrentUser();
     const location = useLocation();
-    console.log(location);
+    // console.log(location);
     return (
         <>
             {

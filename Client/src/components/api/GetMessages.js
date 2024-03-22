@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/message";
+const API_URL = "/api/message";
 
 export const getMessages = async (chat_id) => {
     try

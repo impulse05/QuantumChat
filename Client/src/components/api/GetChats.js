@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/chats";
+const API_URL = "/api/chats";
 
 export const getChats = async (isGroupChat) => {
     const token = JSON.parse(localStorage.getItem("token"));

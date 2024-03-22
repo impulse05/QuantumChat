@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { getMessages } from '../../../api/GetMessages';
 import { useParams } from 'react-router-dom';
+import { getChats } from '../../../api/GetChats';
+import { useChat } from '../../../../Context/chatProvider';
 
 function Messages({ messages }) {
     // Empty dependency array ensures this effect runs only once when the component mounts
@@ -19,7 +21,7 @@ function Messages({ messages }) {
 
 
 
-    let my_user_id = JSON.parse(localStorage.getItem("user"))?._id;
+    const { user } = useChat();
 
     return (
         <div class="messages flex-1 overflow-auto max-h-[75vh]">
@@ -28,7 +30,7 @@ function Messages({ messages }) {
                 messages?.map((message, index) => {
                     // add the ref  to the last message
                 
-                    return <Message data={message} isme={message.sender._id.toString() === my_user_id} />
+                    return <Message data={message} isme={message.sender._id.toString() === user._id} />
 
                 }
                 

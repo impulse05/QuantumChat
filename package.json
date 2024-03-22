@@ -6,8 +6,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "start":"node index.js",
+    "postinstall": "npm run swagger && cd client && npm install --production=false && npm run build",
+    "server": "node index.js",
+    "swagger": "node swagger.js",
+    "client":"npm run dev --prefix client"
   },
   "author": "Team MSP",
   "license": "ISC",

@@ -40,7 +40,7 @@ const socketInit = (server)   => {
                 // send the message to the chat
                 chatUser.users.forEach(user => {
                     // console.log('user', user);
-                    if (user._id.toString() !== sender._id.toString()|| true) {
+                    if (user._id.toString() !== sender._id.toString()) {
                         console.log('emit to', user._id);
                         socket.in(user._id.toString()).emit('message received', message);
                     }

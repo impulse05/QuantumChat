@@ -76,7 +76,28 @@
         }
       }
     },
-    "/chats": {
+    "/chats/personal": {
+      "get": {
+        "tags": [
+          "chat"
+        ],
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/chats/group": {
       "get": {
         "tags": [
           "chat"
@@ -462,9 +483,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "_id": {
-                    "example": "any"
-                  },
                   "name": {
                     "example": "any"
                   },

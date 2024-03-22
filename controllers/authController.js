@@ -184,7 +184,8 @@ const allRedirect = async (req, res) => {
     // backend se frontend pe jayenge
     // token, userid asdfasdf
     // const redirectURL = `http://localhost:8080/saveToken?JWT=${token}`;
-    const redirectURL = `http://localhost:5173/saveToken?JWT=${token}`;
+    const baseURL = req.headers.origin;
+    const redirectURL = `${baseURL}/saveToken?JWT=${token}`;
 
     res.redirect(redirectURL);
   } catch (error) {

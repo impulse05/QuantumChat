@@ -4,8 +4,14 @@ import Chatlist from './Chatlist'
 import logo from "../../../assets/logo.png"
 import { getChats } from '../../api/GetChats';
 import { Routes, Route } from 'react-router-dom';
+import { useChat } from '../../../Context/chatProvider';
 
 function Sidebar() {
+
+
+  // const [groupChats, setGroupChats] = useState([]);
+
+  const { groupChats, setGroupChats, personalChats, setPersonalChats } = useChat();
 
  
 

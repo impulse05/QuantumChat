@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ChatlistItem from './ChatlistItem'
 import { Link } from 'react-router-dom'
+import { useChat } from '../../../Context/chatProvider'
 
 function Chatlist({ chats, groupChat }) {
-    let data = {
-        profile_pic: "",
-        isonline: true,
-        name: "Lucky Kushwaha",
-        lastMessage: "Yeah, Sure!",
-        unseen_msg_cnt: 0,
-        last_msg_date: "06/01/2024",
-        isopened: true
-    }
+
+    const {user, setSelectedChat }= useChat();
+   
     // console.log(chats)
 
     return (
@@ -20,16 +15,23 @@ function Chatlist({ chats, groupChat }) {
 
 
             {chats?.map((chat) => {
+                 const data = {
+                    ...chat,
+                    profile_pic: "",
+                    isonline: true,
+                    name: "Lucky Kushwaha",
+                    lastMessage: "Yeah, Sure!",
+                    unseen_msg_cnt: 0,
+                    last_msg_date: "06/01/2024",
+                    isopened: false
+                }
                  data.lastMessage = chat?.lastMessage?.content;
-                 data.last_msg_date = new Date(chat.lastMessage.updatedAt).toLocaleDateString({
-                     day: '2-digit',
-                     month: '2-digit',
-                     year: 'numeric',
-                 }).toString();
+                 data.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString();
 
                 if (groupChat == true) {
                     data.name = chat.chatName;
                     data.profile_pic = chat.chatPicture;
+                    setSelectedChat(data);
                     return (
                         <Link to={`/group/${chat._id}`}>
                             <ChatlistItem data={data} />
@@ -38,10 +40,8 @@ function Chatlist({ chats, groupChat }) {
                 }
                 else {
 
-                    let other_user = chat.users.filter((user) => {
-                        return user._id.toString() != localStorage.getItem("userid");
-                    })[0];
-
+                    let other_user = chat.users.find((u) => u._id != user._id);
+                    setSelectedChat(data);
                     data.name = other_user.name;
                     data.profile_pic = other_user.picture;
                     return (

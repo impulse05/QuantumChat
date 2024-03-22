@@ -6,6 +6,7 @@ import Quantumchat from './components/Quantumchat';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import { useEffect } from 'react';
 import { validateuser } from './components/Auth/auth';
+import ChatProvider from './Context/chatProvider';
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
   
 
   return (
-  
+    <ChatProvider>
       <BrowserRouter>
         <Routes>
          
@@ -28,6 +29,7 @@ function App() {
           } />
         </Routes>
       </BrowserRouter>
+      </ChatProvider>
   
   )
 }

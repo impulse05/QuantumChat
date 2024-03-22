@@ -9,7 +9,7 @@ export const userRegister = (data) => {
                }
           }
           try{
-               const response = await axios.post('http://localhost:5000/api/signup',data,config);
+               const response = await axios.post('/api/signup',data,config);
                console.log(response.data);
 
           } catch(error){

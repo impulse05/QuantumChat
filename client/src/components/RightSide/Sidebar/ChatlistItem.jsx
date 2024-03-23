@@ -2,19 +2,19 @@ import React from 'react'
 import profile_photo from "../../../assets/profile.png"
 import { useChat } from '../../../Context/chatProvider';
 function ChatlistItem(props) {
-    let data = props.data;
+    const data = props.data;
 
    
 
-    let isopened_classes = ""
+    const isopened_classes = ""
     if (data.isopened)
         isopened_classes = "border-l-4 border-blue-700 bg-[#2D3748]"
 
-    let bg_color_class = "bg-gray-400";
+    const bg_color_class = "bg-gray-400";
     if (data.isonline == true)
         bg_color_class = "bg-green-400";
 
-    let bold_class = "";
+    const bold_class = "";
     if(data.unseen_msg_cnt > 0)
         bold_class = "font-bold"
 

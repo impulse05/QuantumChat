@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getUsers } from '../../api/GetUsers';
-import { createChat } from './../../../../../controllers/chatControllers';
+
 import { useNavigate } from 'react-router-dom';
 import { useChat } from '../../../Context/chatProvider';
+import { CreateChat } from '../../api/CreateChat';
 
 export default function CreateChatModal({ isOpen, onClose }) {
     const [checkedUsers, setCheckedUsers] = useState([]);
@@ -16,7 +17,7 @@ export default function CreateChatModal({ isOpen, onClose }) {
             setAllUsers(data);
         })
     }, []);
-    const {setRefresh,setSelectedChat} = useChat();
+    const {setRefresh,setSelectedChat,user} = useChat();
     // Function to handle toggling the checkbox state
     const toggleCheckbox = (userId) => {
         console.log(userId);
@@ -36,11 +37,13 @@ export default function CreateChatModal({ isOpen, onClose }) {
         {
             return alert("Enter the group name");
         }
-        createChat({isGroupChat:checkedUsers.length>1, users: checkedUsers, chatName: groupName})
+        CreateChat({isGroupChat:checkedUsers.length>1, users: checkedUsers, chatName: groupName})
         .then(data => {
+
             setRefresh(prev => !prev);
-            setSelectedChat(data)
-            navigate(`/chat/${data._id}`);
+           
+            setSelectedChat(data);
+            navigate(`/chats/${data._id}`);
             onClose();
         }) 
 

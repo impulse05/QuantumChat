@@ -26,6 +26,19 @@ export const createChat = async (req, res) => {
             throw new Error("Group chat must have at least 2 users");
         }
 
+        if(!isGroupChat)
+        {
+            const old = await  Chat.findOne({
+                users :{$eq:users},
+                isGroupChat:false
+            })
+
+            if(old)
+            return res.status(201).json({
+                    message:"chat with this user already crated",chat:old});
+
+        }
+
 
         const chat = new Chat({
             isGroupChat,

@@ -15,33 +15,14 @@ function Chatlist() {
 
 
             {filterdChats?.map((chat) => {
-                 const data = {
-                    ...chat,
-                    profile_pic: "",
-                    isonline: true,
-                    name: "Lucky Kushwaha",
-                    lastMessage: "Yeah, Sure!",
-                    unseen_msg_cnt: 0,
-                    last_msg_date: "06/01/2024",
-                    isopened: false
-                }
-                 data.lastMessage = chat?.lastMessage?.content;
-                 data.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString();
+               
+                 chat.lastMessage = chat?.lastMessage?.content;
+                 chat.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString();
 
-                if (chat.isGroupChat == true) {
-                    data.name = chat.chatName;
-                    data.profile_pic = chat.chatPicture;
-                
-                }
-                else {
-
-                    let other_user = chat.users.find((u) => u._id != user._id);
-                    data.name = other_user.name;
-                    data.profile_pic = other_user.picture;
-                }
+               
                 return (
-                    <Link to={`/chats/${chat._id}`} onClick={()=>setSelectedChat(data)}>
-                        <ChatlistItem data={data} />
+                    <Link to={`/chats/${chat._id}`} onClick={()=>setSelectedChat(chat)}>
+                        <ChatlistItem data={chat} />
                     </Link>
                 )
                

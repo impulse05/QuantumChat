@@ -4,7 +4,16 @@ import { useChat } from '../../../Context/chatProvider';
 function ChatlistItem(props) {
     const data = props.data;
 
-   
+    const { user } = useChat();
+
+    if (data?.isGroupChat == true) {
+        data.name = data?.chatName;
+        data.profile_pic = data?.chatPicture;
+    } else {
+        const other_user = data?.users?.find((u) => u._id != user._id);
+        data.name = other_user?.name;
+        data.profile_pic = other_user?.picture;
+    }
 
     const isopened_classes = ""
     if (data.isopened)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import logo from "../assets/logo.png"
 import { useNavigate } from 'react-router-dom';
 import { login } from './Auth/auth';
@@ -11,6 +11,7 @@ function Login(props) {
     const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
     const { refresh, setRefresh } = useChat();
+    const {user}= useChat();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,6 +26,12 @@ function Login(props) {
             console.log("err: ", err);
         });
     }
+
+    useEffect(() => {
+        if(user){
+            navigate('/');
+        }
+    }, []);
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900">

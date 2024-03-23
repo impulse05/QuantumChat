@@ -76,28 +76,7 @@
         }
       }
     },
-    "/chats/personal": {
-      "get": {
-        "tags": [
-          "chat"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/chats/group": {
+    "/chats": {
       "get": {
         "tags": [
           "chat"
@@ -529,16 +508,6 @@
       }
     },
     "/auth/github": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/auth/facebook": {
       "get": {
         "description": "",
         "responses": {

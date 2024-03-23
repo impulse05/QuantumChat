@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import logo from "../assets/logo.png"
 import { register } from './Auth/auth';
+import { FacebookLoginButton, GoogleLoginButton, GithubLoginButton } from "react-social-login-buttons";
 import { useNavigate } from 'react-router-dom';
 
 function Register(props) {
-
     const navigate = useNavigate();
 
     const [state, setstate] = useState({
-        name:'',
+        name: '',
         email: '',
-        phone:'',
+        phone: '',
         picture: 'https://icon-library.com/images/users-icon-png/users-icon-png-15.jpg',
         password: '',
         confirmpassword: '',
@@ -23,49 +23,47 @@ function Register(props) {
         })
     }
 
-    
     const fileHandle = async (event) => {
         event.preventDefault()
         try {
-          const data = new FormData()
-          await data.append("file", event.target.files[0])
-          data.append("upload_preset", "QuantumChat")
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/dqhoktvcj/image/upload",
-            {
-              method: "POST",
-              body: data,
-            }
-          )
-          const file = await res.json()
-          setstate({
-            ...state,
-            picture: file.secure_url
-        })
+            const data = new FormData()
+            await data.append("file", event.target.files[0])
+            data.append("upload_preset", "QuantumChat")
+            const res = await fetch(
+                "https://api.cloudinary.com/v1_1/dqhoktvcj/image/upload",
+                {
+                    method: "POST",
+                    body: data,
+                }
+            )
+            const file = await res.json()
+            setstate({
+                ...state,
+                picture: file.secure_url
+            })
         } catch (error) {
-          console.log(error)
+            console.log(error)
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {name, email, phone, picture, password, confirmpassword} = state;
-        if(password!==confirmpassword){
+        const { name, email, phone, picture, password, confirmpassword } = state;
+        if (password !== confirmpassword) {
             alert("Password and Confirm Password should be same")
             return
         }
+
         register(name, email, phone, picture, password)
-        .then((res) =>{
-            console.log("res: ", res);
-            const { state } = props;
-            const { from } = state || { from: { pathname: "/" } };
-            navigate(from);
-        }).catch((err) => {
-            console.log("err: ", err);
-        });
+            .then((res) => {
+                console.log("res: ", res);
+                const { state } = props;
+                const { from } = state || { from: { pathname: "/" } };
+                navigate(from);
+            }).catch((err) => {
+                console.log("err: ", err);
+            });
     }
-
-
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
@@ -88,7 +86,6 @@ function Register(props) {
                                     className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-blue-gray-500 leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900">Name
                                 </label>
                             </div>
-
 
                             <div className="relative w-full min-w-[200px] h-10">
                                 <input type="email" name="email" id="email" onChange={inputHandle} value={state.email}
@@ -142,11 +139,12 @@ function Register(props) {
                                     type="file" />
                             </div>
 
-
-
-
                             <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
-                            <a href="auth/google" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login with Google</a>
+                            <div className="flex flex-col space-y-2">
+                                {/* <FacebookLoginButton onClick={() => { window.location = "/api/auth/facebook" }}/> */}
+                                <GoogleLoginButton onClick={() => { window.location = "/api/auth/google" }} />
+                                <GithubLoginButton onClick={() => { window.location = "/api/auth/github" }} />
+                            </div>     
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account? <a href="login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                             </p>

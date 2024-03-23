@@ -3,6 +3,7 @@ import logo from "../assets/logo.png"
 import { useNavigate } from 'react-router-dom';
 import { login } from './Auth/auth';
 import { useChat } from '../Context/chatProvider';
+import { FacebookLoginButton ,GoogleLoginButton ,GithubLoginButton } from "react-social-login-buttons";
 
 function Login(props) {
     const [email, setEmail] = useState("");
@@ -20,12 +21,10 @@ function Login(props) {
             const { from } = state || { from: { pathname: "/" } };
             navigate(from);
             setRefresh(prev => !prev);
-
         }).catch((err) => {
             console.log("err: ", err);
         });
     }
-
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
@@ -39,7 +38,7 @@ function Login(props) {
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Login to QuantumChat
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#" onSubmit={handleSubmit}>
+                        <form className="space-y-4 md:space-y-6" action="#" >
                             <div className="relative w-full min-w-[200px] h-10">
                                 <input
                                     className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
@@ -61,6 +60,7 @@ function Login(props) {
                                         console.log({password})
                                         }
                                     }
+
                                     value={password}
                                 />
                                 <label
@@ -81,7 +81,18 @@ function Login(props) {
                                 </div>
                                 <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
                             </div>
-                            <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login</button>
+
+                            {/* normal login button */}
+                            <button onClick={handleSubmit} className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login</button>
+
+                            {/* social login google facebook and github */}
+
+                            <div className="flex flex-col space-y-2">
+                                {/* <FacebookLoginButton onClick={() => { window.location = "/api/auth/facebook" }}/> */}
+                                <GoogleLoginButton onClick={() => { window.location = "/api/auth/google" }} />
+                                <GithubLoginButton onClick={() => { window.location = "/api/auth/github" }} />
+                            </div>
+
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Don't have an account yet? <a href="signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
                             </p>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import MyProfileModal from './MyProfileModal';
 import { Link } from 'react-router-dom';
+import { getCurrentUser, logout } from '../Auth/auth';
 
 function Menu() {
     const [show, setShow] = useState(false);
@@ -16,7 +17,6 @@ function Menu() {
                     </span>
                 </Link>
 
-              
                 <a onClick={()=>{setShow(true)}} class="flex items-center justify-center py-4 px-4 border-l-4 text-gray-100 hover:bg-[#2D3748]" href="javascript:return false;">
                     <span class="inline-block align-text-bottom">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -25,7 +25,7 @@ function Menu() {
                     </span>
                 </a>
 
-                <a class="flex items-center justify-center py-4 px-4 border-l-4 text-gray-100 hover:bg-[#2D3748]" href="javascript:return false;">
+                <a onClick={() => { logout(); ()=>{window.location.reload()}} } class="flex items-center justify-center py-4 px-4 border-l-4 text-gray-100 hover:bg-[#2D3748]" >
                     <span class="inline-block align-text-bottom">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25" />

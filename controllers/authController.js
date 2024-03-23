@@ -10,6 +10,7 @@ const signUp = async (req, res) => {
     if (!name || !email || !phone || !password) {
       throw new Error("Enter Valid Credentials");
     }
+
     const alreadyExist = await User.findOne({ $or: [{ email }, { phone }] });
 
     if (alreadyExist) {
@@ -57,6 +58,7 @@ const login = async (req, res) => {
     if (!email) {
       throw new Error("Enter the email");
     }
+
     if (!password) {
       throw new Error("Enter the password");
     }
@@ -65,6 +67,7 @@ const login = async (req, res) => {
     if (!user) {
       throw new Error("User with this email doesn't exist");
     }
+
     // check provider
     if (user.provider !== "local") {
       throw new Error("Please login with " + user.provider);
@@ -150,7 +153,7 @@ const allRedirect = async (req, res) => {
 
     // for github use profileURL as email , google use email and facebook use email
     let user = {
-      name: req.user.displayName,
+      name: req.user.displayName || req.user._json?.login,
       email:
         req.user.email ||
         req.user._json?.email ||
@@ -174,18 +177,14 @@ const allRedirect = async (req, res) => {
 
     const payload = { _id: alreadyExist._id };
 
-    const token = jwt.sign(payload, process.env.JWT_KEY, {
+    const token = await jwt.sign(payload, process.env.JWT_KEY, {
       expiresIn: process.env.ExpiresIn,
     });
+    console.log(token);
 
     res.cookie("JWT", token);
-
-    // front end wala page bnayega
-    // backend se frontend pe jayenge
-    // token, userid asdfasdf
-    // const redirectURL = `http://localhost:8080/saveToken?JWT=${token}`;
-    const baseURL = req.headers.origin;
-    const redirectURL = `${baseURL}/saveToken?JWT=${token}`;
+    
+    const redirectURL = `/saveToken?JWT=${token}`;
 
     res.redirect(redirectURL);
   } catch (error) {
@@ -206,7 +205,6 @@ const getUsers = async (req, res) => {
       $ne: req.user._id,
     } }).select("-password");
     
-
     res.status(200).json({
       users,
     });

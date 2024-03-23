@@ -31,7 +31,18 @@ export const createChat = async (req, res) => {
             const old = await  Chat.findOne({
                 users :{$eq:users},
                 isGroupChat:false
+            }).populate({
+                path: 'lastMessage',
+                select: 'content sender', // simlar esa kuch imse bhi kar lena // space seperated jo jo select krna h
+                populate: {
+                    path: 'sender',
+                    select: 'name picture email'//ese karke specifi hi select karna faltu data mat lana
+                }
             })
+            .populate({
+                path: 'users',
+                select: 'name picture email phone'
+            });
 
             if(old)
             return res.status(201).json({
@@ -50,8 +61,21 @@ export const createChat = async (req, res) => {
 
         await chat.save();
 
+        const fullChat = await Chat.findById(chat._id).populate({
+            path: 'lastMessage',
+            select: 'content sender', // simlar esa kuch imse bhi kar lena // space seperated jo jo select krna h
+            populate: {
+                path: 'sender',
+                select: 'name picture email'//ese karke specifi hi select karna faltu data mat lana
+            }
+        })
+        .populate({
+            path: 'users',
+            select: 'name picture email phone'
+        });
+
         res.status(200).json({
-            chat
+            chat: fullChat
         });
     } catch (error) {
         console.log(error.message);

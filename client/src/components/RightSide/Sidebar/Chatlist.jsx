@@ -17,7 +17,7 @@ function Chatlist() {
             {filterdChats?.map((chat) => {
                
                  chat.lastMessage = chat?.lastMessage?.content;
-                 chat.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString();
+                 chat.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString() || "";
 
                
                 return (

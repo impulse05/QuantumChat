@@ -3,9 +3,9 @@ import ChatlistItem from './ChatlistItem'
 import { Link } from 'react-router-dom'
 import { useChat } from '../../../Context/chatProvider'
 
-function Chatlist({ chats, groupChat }) {
+function Chatlist() {
 
-    const {user, setSelectedChat }= useChat();
+    const {user, setSelectedChat,filterdChats }= useChat();
    
     // console.log(chats)
 
@@ -14,7 +14,7 @@ function Chatlist({ chats, groupChat }) {
         <div class="flex-1 max-h-[75vh] overflow-auto px-2">
 
 
-            {chats?.map((chat) => {
+            {filterdChats?.map((chat) => {
                  const data = {
                     ...chat,
                     profile_pic: "",
@@ -28,28 +28,23 @@ function Chatlist({ chats, groupChat }) {
                  data.lastMessage = chat?.lastMessage?.content;
                  data.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString();
 
-                if (groupChat == true) {
+                if (chat.isGroupChat == true) {
                     data.name = chat.chatName;
                     data.profile_pic = chat.chatPicture;
-                   
-                    return (
-                        <Link to={`/group/${chat._id}` } onClick={()=>setSelectedChat(data)}>
-                            <ChatlistItem data={data} />
-                        </Link>
-                    )
+                
                 }
                 else {
 
                     let other_user = chat.users.find((u) => u._id != user._id);
-                    
                     data.name = other_user.name;
                     data.profile_pic = other_user.picture;
-                    return (
-                        <Link to={`/personal/${chat._id}`} onClick={()=>setSelectedChat(data)}>
-                            <ChatlistItem data={data} />
-                        </Link>
-                    )
                 }
+                return (
+                    <Link to={`/chats/${chat._id}`} onClick={()=>setSelectedChat(data)}>
+                        <ChatlistItem data={data} />
+                    </Link>
+                )
+               
             })}
 
 

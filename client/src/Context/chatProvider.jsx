@@ -19,29 +19,44 @@ const ChatProvider = ({ children }) => {
     });
 
     const [refresh, setRefresh] = useState(false);
-    const [groupChat, setGroupChat] = useState(false);
-    const [groupChats, setGroupChats] = useState([]);
+    const [chats, setChats] = useState([]);
+    const [filter, setFilter] = useState("");
+    const [filterdChats, setFilterdChats] = useState([])
 
-    const [personalChats, setPersonalChats] = useState([]);
   
   
     useEffect(() => {
    
-      getChats(true).then((data) => {
+      getChats().then((data) => {
         console.log(data);
-        setGroupChats(data);
+        setChats(data);
+        setFilterdChats(data);
       });
-      getChats(false).then((data) => {
-        console.log(data);
-        setPersonalChats(data);
-      });
+      
   
     }, [refresh]);
+
+    useEffect(() => {
+      if(!filter || !filter.length)
+      setFilterdChats(chats);
+
+      else {
+        // filter based on string
+        const filterd = chats.filter(chat => 
+          chat.users.some(user => user.name.toLowerCase().includes(filter.toLowerCase()))
+      );
+      
+        setFilterdChats(filterd);
+      }
+      
+    }, [filter,refresh])
+    console.log(filterdChats);
+    
 
  
 
     return (
-        <ChatContext.Provider value={{ user, selectedChat, setSelectedChat, groupChat, setGroupChat, groupChats, setGroupChats, personalChats, setPersonalChats,refresh, setRefresh }}>
+        <ChatContext.Provider value={{ user, selectedChat, setSelectedChat,refresh, setRefresh ,filter,setFilter,filterdChats}}>
             {children}
         </ChatContext.Provider>
     )

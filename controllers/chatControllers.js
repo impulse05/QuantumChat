@@ -123,7 +123,7 @@ export const getPersonalChats = async (req, res) => {
                     "apiKeyAuth": []
             }] */
         const { _id } = req.user;
-        const chats = await Chat.find({ users:_id, isGroupChat: false }).populate({
+        const chats = await Chat.find({ users:_id}).populate({
             path: 'lastMessage',
             select: 'content sender', // simlar esa kuch imse bhi kar lena // space seperated jo jo select krna h
             populate: {

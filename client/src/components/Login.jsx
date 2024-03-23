@@ -43,7 +43,7 @@ function Login(props) {
                             <div className="relative w-full min-w-[200px] h-10">
                                 <input
                                     className="peer w-full h-full bg-transparent text-blue-gray-700 font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
-                                    placeholder="xyz@example.com" 
+                                    placeholder="" 
                                     onChange={(e) => {
                                         setEmail(e.target.value)
                                     }}
@@ -55,7 +55,7 @@ function Login(props) {
                             <div className="relative h-10 w-full min-w-[200px]">
                                 <input type="password"
                                     className="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                    placeholder="Enter your password"
+                                    placeholder=""
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                         console.log({password})

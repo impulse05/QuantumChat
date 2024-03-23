@@ -9,9 +9,8 @@ import { useChat } from '../../../Context/chatProvider';
 function Sidebar() {
 
 
-  // const [groupChats, setGroupChats] = useState([]);
 
-  const { groupChats, setGroupChats, personalChats, setPersonalChats } = useChat();
+  const {  filteredChats } = useChat();
 
  
 
@@ -29,26 +28,9 @@ function Sidebar() {
         </a>
       </div>
       {/* create a router for group vs normal chat */}
-      <Routes>
-        <Route  path="/group/*" element={
-          <>
-            <Searchbar chats={groupChats}/>
-            <Chatlist chats={groupChats} groupChat={true} />
-          </>
-        } />
-        <Route path="/personal/*" element={
-          <>
-            <Searchbar chats={personalChats}/>
-            <Chatlist chats={personalChats} groupChat={false} />
-          </>
-        } />
-        <Route path="*" element={
-          <>
-            <Searchbar chats={personalChats}/>
-            <Chatlist chats={personalChats} groupChat={false} />
-          </>
-        } />
-      </Routes>
+        <Searchbar />
+        <Chatlist  />
+       
     </div>
   )
 }

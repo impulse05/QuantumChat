@@ -26,8 +26,7 @@ function RightSide() {
           <div class="flex-1 flex h-full">
             <Sidebar/>
             <Routes>
-              <Route path="/group/:id" element={<Chatarea togglePanel={togglePanel}/>} />
-              <Route path="/personal/:id" element={<Chatarea  togglePanel={togglePanel}/>} />
+              <Route path="/chats/:id" element={<Chatarea togglePanel={togglePanel}/>} />
             </Routes>
 
 

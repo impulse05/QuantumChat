@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.post('/chat', verifyUser, createChat);
 // get group chats
-router.get('/chats/personal', verifyUser, getPersonalChats);
+router.get('/chats', verifyUser, getPersonalChats);
 // get personal chats
-router.get('/chats/group', verifyUser, getGroupChats);
+// router.get('/chats/group', verifyUser, getGroupChats);
 router.get('/chat/:chatId', verifyUser, getChat);
 // join chat
 router.put('/chat/:chatId', verifyUser, joinChat);

@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from 'react'
-import logo from "../assets/logo.png"
-import { useNavigate } from 'react-router-dom';
-import { login } from './Auth/auth';
-import { useChat } from '../Context/chatProvider';
+import logo from "../../assets/logo.png"
+import { Link, useNavigate } from 'react-router-dom';
+import { login, sendEmailforPasswordReset } from '../api/auth';
+import { useChat } from '../../Context/chatProvider';
 import { FacebookLoginButton ,GoogleLoginButton ,GithubLoginButton } from "react-social-login-buttons";
 
 function Login(props) {
@@ -25,6 +25,19 @@ function Login(props) {
         }).catch((err) => {
             console.log("err: ", err);
         });
+    }
+
+    const handleForgotPassword = () => {
+        if(!email){
+            alert("Please enter email");
+        }
+
+        sendEmailforPasswordReset(email).then((res) => {
+            console.log("res: ", res);
+            alert("Email sent successfully");
+        }).catch((err) => {
+            console.log("err: ", err);
+         }); 
     }
 
     useEffect(() => {
@@ -86,7 +99,7 @@ function Login(props) {
                                         <label for="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                                     </div>
                                 </div>
-                                <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+                                <button onClick={handleForgotPassword} className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</button>
                             </div>
 
                             {/* normal login button */}
@@ -101,7 +114,7 @@ function Login(props) {
                             </div>
 
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don't have an account yet? <a href="signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+                                Don't have an account yet?  <Link to="/signup" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</Link>
                             </p>
                         </form>
                     </div>

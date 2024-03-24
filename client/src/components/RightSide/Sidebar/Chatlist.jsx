@@ -14,9 +14,6 @@ function Chatlist() {
         <div class="flex-1 max-h-[75vh] overflow-auto px-2">
 
             {filterdChats?.map((chat) => {
-                 chat.lastMessage = chat?.lastMessage?.content;
-                 chat.last_msg_date = new Date(chat?.lastMessage?.updatedAt).toLocaleDateString() || "";
-
                 return (
                     <Link to={`/chats/${chat._id}`} onClick={()=>setSelectedChat(chat)}>
                         <ChatlistItem data={chat} />

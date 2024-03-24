@@ -15,6 +15,7 @@ const register = async (name, email, phone, picture, password) => {
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
             localStorage.setItem("user", JSON.stringify(response.data.data.user));
         }
+
         return response.data.data;
     });
 }
@@ -28,6 +29,7 @@ const login = async (email,password)=>{
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
             localStorage.setItem("user", JSON.stringify(response.data.data.user));
         }
+
         return response.data.data;
     });
 }
@@ -44,11 +46,11 @@ const validateuser = () => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        
         }).then((response)=>{
             if(response.data){
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
+
             return response.data;
         }).catch((error)=>{
             localStorage.removeItem("user");
@@ -56,8 +58,9 @@ const validateuser = () => {
             window.location.href = "/login";
             return false;
         });
+    } else{
+        console.log("No token found");
     }
-
 }
 
 const getCurrentUser = () => {
@@ -66,15 +69,31 @@ const getCurrentUser = () => {
     if( token && user){
         return user;
     }
+
     return null;
 };
-
-
 
 const saveToken = (token) => {
     localStorage.setItem("token", JSON.stringify(token));
 }
 
+const sendEmailforPasswordReset = (email) => {
+    return axios.post( "/api/forgotpassword", {
+        email
+    }).then((response)=>{
+        return response.data;
+    });
+}
+
+const resetPassword = (password, token) => {
+    console.log(password, token)
+    return axios.post( "/api/resetpassword", {
+        password,token
+    }).then((response)=>{
+        return response.data;
+    }
+    );
+}
 
 export {
     register,
@@ -82,5 +101,7 @@ export {
     logout,
     getCurrentUser,
     saveToken,
-    validateuser
+    validateuser,
+    sendEmailforPasswordReset,
+    resetPassword
 };

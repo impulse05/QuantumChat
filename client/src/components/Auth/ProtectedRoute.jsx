@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { getCurrentUser } from './auth'
+import { getCurrentUser } from '../api/auth'
 function ProtectedRoute({ children }) {
     const currentUser = getCurrentUser();
     const location = useLocation();

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import logo from "../assets/logo.png"
-import { register } from './Auth/auth';
+import logo from "../../assets/logo.png"
+import { register } from '../api/auth';
 import { FacebookLoginButton, GoogleLoginButton, GithubLoginButton } from "react-social-login-buttons";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Register(props) {
     const navigate = useNavigate();
@@ -146,7 +146,7 @@ function Register(props) {
                                 <GithubLoginButton onClick={() => { window.location = "/api/auth/github" }} />
                             </div>     
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Already have an account? <a href="login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                                Already have an account? <Link to="/login" clLinkssName="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</Link>
                             </p>
                         </form>
                     </div>

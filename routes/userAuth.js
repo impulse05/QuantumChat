@@ -1,5 +1,5 @@
 import express from "express";
-import { allRedirect, editUser, getUsers, login, signUp } from "../controllers/authController.js";
+import { allRedirect, editUser, forgetPassword, getUsers, login, resetPassword, signUp } from "../controllers/authController.js";
 import {
   facebookAuthentication,
   githubAuthentication,
@@ -27,5 +27,8 @@ router.get("/auth/github", githubAuthentication);
 router.get("/auth/google/callback",passport.authenticate("google", { session: false }),allRedirect);
 router.get("/auth/github/callback",passport.authenticate("github", { session: false }),allRedirect);
 // router.get("/auth/facebook/callback",passport.authenticate("facebook", { session: false }),allRedirect);
+
+router.post("/forgotpassword",forgetPassword);
+router.post("/resetpassword",resetPassword);
 
 export default router;

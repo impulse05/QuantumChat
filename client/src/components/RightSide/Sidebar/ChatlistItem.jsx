@@ -4,17 +4,6 @@ import { useChat } from '../../../Context/chatProvider';
 function ChatlistItem(props) {
     const data = props.data;
 
-    const { user } = useChat();
-
-    if (data?.isGroupChat == true) {
-        data.name = data?.chatName;
-        data.profile_pic = data?.chatPicture;
-    } else {
-        const other_user = data?.users?.find((u) => u._id != user._id);
-        data.name = other_user?.name;
-        data.profile_pic = other_user?.picture;
-    }
-
     const isopened_classes = ""
     if (data.isopened)
         isopened_classes = "border-l-4 border-blue-700 bg-[#2D3748]"
@@ -38,10 +27,10 @@ function ChatlistItem(props) {
             </div>
             <div class="flex-1 px-2">
                 <div class="truncate w-32"><span class="">{data.name}</span></div>
-                <div class="truncate w-32 text-gray-600"><small class={data.unseen_msg_cnt > 0 ? "text-gray-200" : "text-gray-600"}>{data.lastMessage}</small></div>
+                <div class="truncate w-32 text-gray-600"><small class={data.unseen_msg_cnt > 0 ? "text-gray-200" : "text-gray-600"}>{data?.lastMessage?.content}</small></div>
             </div>
             <div class="flex-2 text-right">
-                <div><small class={data.unseen_msg_cnt > 0 ? "" : " text-gray-600"}>{data.last_msg_date}</small></div>
+                <div><small class={data.unseen_msg_cnt > 0 ? "" : " text-gray-600"}>{new Date(data?.updatedAt)?.toUTCString()?.substring(0,22) }</small></div>
                 
                 {
                     data.unseen_msg_cnt > 0 ? (<div>

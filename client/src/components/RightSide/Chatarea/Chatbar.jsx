@@ -2,21 +2,8 @@ import React from 'react'
 import { useChat } from '../../../Context/chatProvider';
 
 function Chatbar({data, togglePanel}) {
-
     const {user} = useChat();
 
-    if (data?.isGroupChat == true) {
-        data.name = data?.chatName;
-        data.profile_pic = data?.chatPicture;
-    
-    }
-    else {
-
-        const other_user = data?.users?.find((u) => u._id != user._id);
-        data.name = other_user?.name;
-        data.profile_pic = other_user?.picture;
-    }
-    
     return (
         <div class="chat-header px-6 py-4 flex flex-row flex-none justify-between items-center shadow">
             <div class="flex">

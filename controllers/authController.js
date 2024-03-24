@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import nodemailer from "nodemailer";
 const signUp = async (req, res) => {
   try {
     // swagger tag
@@ -217,4 +218,109 @@ const getUsers = async (req, res) => {
   }
 };
 
-export {signUp, login, editUser, allRedirect, getUsers};
+// add forget password send a link on email
+const forgetPassword = async (req, res) => {
+  try {
+    // #swagger.tags = ['auth']
+    const { email } = req.body;
+
+    if (!email) {
+      throw new Error("Enter the email");
+    }
+
+    const user = await User.findOne({ email
+    });
+
+    if (!user) {
+      throw new Error("User with this email doesn't exist");
+    }
+
+    const payload = { _id: user._id };
+
+    const token = jwt.sign(payload, process.env.JWT_KEY, {
+      expiresIn: process.env.ExpiresIn,
+    });
+
+    // send email with token
+    const baseUrl = req.protocol + "://" + req.get("host");
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: "Reset Password",
+      text: `Click on the link to reset password ${baseUrl}/resetPassword/${token}`,
+      html: `<p>Click on the link to reset password <a href="${baseUrl}/resetPassword/${token}">Reset Password</a>
+      </p>`,
+    };
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        throw new Error("Error in sending email");
+      } else {
+        console.log("Email sent: " + info.response);
+        res.status(200).json({
+          success: true,
+          message: "An Email has been sent to your email address with further instructions",
+        });
+      }
+    });
+  } catch (error) {
+    return res.status(402).json({
+      success: false,
+      message: "Forget Password Error",
+      error: error.message,
+    });
+  }
+};
+
+// reset password
+const resetPassword = async (req, res) => {
+  try {
+    // #swagger.tags = ['auth']
+    const { password,token } = req.body;
+    console.log(password);
+    if (!password) {
+      throw new Error("Enter the password");
+    }
+
+    if (!token) {
+      throw new Error("Token not found");
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      decoded._id,
+      { password: hashedPassword },
+      { new: true } // This option returns the updated document
+    );
+
+    if (updatedUser) {
+      res.status(200).json({
+        success: true,
+        message: "Password Reset Successful",
+      });
+    } else {
+      throw new Error("User not found while password reset");
+    }
+  } catch (error) {
+    return res.status(401).json({
+      success: false,
+      message: "Password Reset Error",
+      error: error.message,
+    });
+  }
+};
+
+export {signUp, login, editUser, allRedirect, getUsers, forgetPassword, resetPassword};

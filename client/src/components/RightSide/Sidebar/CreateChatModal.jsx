@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers } from '../../api/GetUsers';
+import { getUsers } from '../../api/users';
 
 import { useNavigate } from 'react-router-dom';
 import { useChat } from '../../../Context/chatProvider';
-import { CreateChat } from '../../api/CreateChat';
+import { CreateChat } from '../../api/chats';
 
 export default function CreateChatModal({ isOpen, onClose }) {
     const [checkedUsers, setCheckedUsers] = useState([]);

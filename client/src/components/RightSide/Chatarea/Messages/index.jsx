@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Message from './Message'
 import { useParams } from 'react-router-dom';
-import { getChats } from '../../../api/GetChats';
+import { getChats } from '../../../api/chats';
 import { useChat } from '../../../../Context/chatProvider';
 
 function Messages({ messages }) {
@@ -18,8 +18,6 @@ function Messages({ messages }) {
       scrollToBottom()
     }, [messages]);
 
-
-
     const { user } = useChat();
 
     return (
@@ -30,13 +28,11 @@ function Messages({ messages }) {
                     // add the ref  to the last message
                 
                     return <Message data={message} isme={message.sender._id.toString() === user._id} />
-
                 }
-                
                 )
             }
-            <div ref={messagesEndRef} />
 
+            <div ref={messagesEndRef} />
 
             {/* <Message data={sample_data_1} />
             <Message data={sample_data_2} /> */}

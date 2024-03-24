@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Searchbar from './Searchbar'
 import Chatlist from './Chatlist'
 import logo from "../../../assets/logo.png"
-import { getChats } from '../../api/GetChats';
+import { getChats } from '../../api/chats';
 import { Routes, Route } from 'react-router-dom';
 import { useChat } from '../../../Context/chatProvider';
 import CreateChatModal from './CreateChatModal';
 
 function Sidebar() {
-
-
-
   const { filteredChats } = useChat();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +29,6 @@ function Sidebar() {
   const createChat = (selectedUsers) => {
     // Logic to create a new chat with selected users
   };
-
 
   return (
     <div class="sidebar hidden lg:flex w-3/12 flex-2 flex-col mr-6 border-r-2 border-gray-800">

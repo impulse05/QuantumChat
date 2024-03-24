@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MyProfileModal from './MyProfileModal';
 import { Link } from 'react-router-dom';
-import { getCurrentUser, logout } from '../Auth/auth';
+import { getCurrentUser, logout } from '../api/auth';
 
 function Menu() {
     const [show, setShow] = useState(false);

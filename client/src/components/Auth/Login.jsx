@@ -22,7 +22,7 @@ function Login(props) {
             const { from } = state || { from: { pathname: "/" } };
             await validateuser();
             await getCurrentUser();
-            window.location.reload();
+            
         }).catch((err) => {
             console.log("err: ", err);
         });

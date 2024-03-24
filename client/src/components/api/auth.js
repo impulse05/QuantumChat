@@ -1,4 +1,5 @@
  import axios from "axios";
+ import { ToastContainer, toast } from 'react-toastify';
 
 const API_URL = "/api";
 
@@ -17,7 +18,9 @@ const register = async (name, email, phone, picture, password) => {
         }
 
         return response.data.data;
-    });
+    }).catch((error)=>{
+        toast(error?.response?.data?.error || "Something went wrong")
+    })
 }
 
 const login = async (email,password)=>{
@@ -29,9 +32,13 @@ const login = async (email,password)=>{
             localStorage.setItem("token", JSON.stringify(response.data.data.token));
             localStorage.setItem("user", JSON.stringify(response.data.data.user));
         }
-
+        
+        window.location.reload();
         return response.data.data;
-    });
+    })
+    .catch((error)=>{
+        toast(error?.response?.data?.error || "Something went wrong")
+    })
 }
 
 const logout = () => {
@@ -50,12 +57,14 @@ const validateuser = () => {
             if(response.data){
                 localStorage.setItem("user", JSON.stringify(response.data));
             }
-
+            
             return response.data;
         }).catch((error)=>{
+        toast(error?.response?.data?.error || "Something went wrong")
+
             localStorage.removeItem("user");
             localStorage.removeItem("token");
-            window.location.href = "/login";
+            
             return false;
         });
     } else{
@@ -82,7 +91,9 @@ const sendEmailforPasswordReset = (email) => {
         email
     }).then((response)=>{
         return response.data;
-    });
+    }).catch((error)=>{
+        toast(error?.response?.data?.error || "Something went wrong")
+    })
 }
 
 const resetPassword = (password, token) => {
@@ -92,7 +103,9 @@ const resetPassword = (password, token) => {
     }).then((response)=>{
         return response.data;
     }
-    );
+    ).catch((error)=>{
+        toast(error?.response?.data?.error || "Something went wrong")
+    })
 }
 
 export {

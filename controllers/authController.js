@@ -70,7 +70,7 @@ const login = async (req, res) => {
     }
 
     // check provider
-    if (user.provider !== "local") {
+    if (user.provider !== "local" && !user.password) {
       throw new Error("Please login with " + user.provider);
     }
 
@@ -274,6 +274,7 @@ const forgetPassword = async (req, res) => {
       }
     });
   } catch (error) {
+    console.log("err", error)
     return res.status(402).json({
       success: false,
       message: "Forget Password Error",
@@ -287,6 +288,7 @@ const resetPassword = async (req, res) => {
   try {
     // #swagger.tags = ['auth']
     const { password,token } = req.body;
+    console.log(token);
     console.log(password);
     if (!password) {
       throw new Error("Enter the password");
@@ -299,11 +301,12 @@ const resetPassword = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_KEY);
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
+    console.log(password);
 
     const updatedUser = await User.findByIdAndUpdate(
       decoded._id,
-      { password: hashedPassword },
-      { new: true } // This option returns the updated document
+      { password: hashedPassword }
     );
 
     if (updatedUser) {

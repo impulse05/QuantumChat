@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import logo from "../../assets/logo.png"
 import { Link, useNavigate } from 'react-router-dom';
-import { login, sendEmailforPasswordReset } from '../api/auth';
+import { getCurrentUser, login, sendEmailforPasswordReset, validateuser } from '../api/auth';
 import { useChat } from '../../Context/chatProvider';
 import { FacebookLoginButton ,GoogleLoginButton ,GithubLoginButton } from "react-social-login-buttons";
 
@@ -42,7 +42,11 @@ function Login(props) {
 
     useEffect(() => {
         if(user){
+            validateuser();
+            getCurrentUser();
+            setRefresh(p => !p);
             navigate('/');
+            setRefresh(p => !p);
         }
     }, []);
 

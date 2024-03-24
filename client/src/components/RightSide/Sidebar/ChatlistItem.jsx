@@ -4,15 +4,15 @@ import { useChat } from '../../../Context/chatProvider';
 function ChatlistItem(props) {
     const data = props.data;
 
-    const isopened_classes = ""
+    let isopened_classes = ""
     if (data.isopened)
         isopened_classes = "border-l-4 border-blue-700 bg-[#2D3748]"
 
-    const bg_color_class = "bg-gray-400";
+    let bg_color_class = "bg-gray-400";
     if (data.isonline == true)
         bg_color_class = "bg-green-400";
 
-    const bold_class = "";
+    let bold_class = "";
     if(data.unseen_msg_cnt > 0)
         bold_class = "font-bold"
 

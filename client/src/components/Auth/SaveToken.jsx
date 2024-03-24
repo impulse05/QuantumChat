@@ -16,10 +16,11 @@ export default function SaveToken() {
        
         await validateuser();
         await getCurrentUser();
-        
+        setRefresh((prev)=>!prev);
         setTimeout(() => {
             setRefresh((prev)=>!prev);
             navigate('/');
+            setRefresh((prev)=>!prev);
         }, 500);
     }
 

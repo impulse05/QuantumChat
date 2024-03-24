@@ -16,12 +16,13 @@ function Login(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log({email,password})
-        login(email, password).then((res) => {
+        login(email, password).then(async (res) => {
             console.log("res: ", res);
             const { state } = props;
             const { from } = state || { from: { pathname: "/" } };
-            navigate(from);
-            setRefresh(prev => !prev);
+            await validateuser();
+            await getCurrentUser();
+            window.location.reload();
         }).catch((err) => {
             console.log("err: ", err);
         });
@@ -42,11 +43,7 @@ function Login(props) {
 
     useEffect(() => {
         if(user){
-            validateuser();
-            getCurrentUser();
-            setRefresh(p => !p);
             navigate('/');
-            setRefresh(p => !p);
         }
     }, []);
 

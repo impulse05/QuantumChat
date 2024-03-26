@@ -19,9 +19,10 @@ export default function SaveToken() {
         setRefresh((prev)=>!prev);
         setTimeout(() => {
             setRefresh((prev)=>!prev);
-            navigate('/');
+            // navigate('/');
+            window.location = "/";
             setRefresh((prev)=>!prev);
-        }, 500);
+        }, 1000);
     }
 
     useEffect(() => {
